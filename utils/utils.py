@@ -8,3 +8,7 @@ def read_file(path=PATH):
         result = json.load(file)
     return result
 
+
+def format_date(date: str):
+    date_operation = date.split('T')[0].split("-")
+    return ".".join(date_operation[::-1])

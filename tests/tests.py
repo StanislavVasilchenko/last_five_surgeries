@@ -1,14 +1,32 @@
 import json
 
-from utils.utils import read_file, format_date
+import pytest
+
+from utils import utils
 from constants import PATH
 
 
-def test_read_file():
-    with open(PATH, "r") as file:
+@pytest.fixture
+def read():
+    with open(PATH) as file:
         result_test = json.load(file)
-    assert read_file() == result_test
+    return result_test
+
+
+def test_read_file(read):
+    assert utils.read_file() == read
 
 
 def test_format_date():
-    assert format_date("2018-12-20T16:43:26.929246") == "20.12.2018"
+    assert utils.format_date("2018-12-20T16:43:26.929246") == "20.12.2018"
+
+
+def test_last_transactions(read):
+    assert len(utils.last_transactions(read)) == 5
+
+
+def test_hide_number():
+    assert utils.hide_number("Счет 44812258784861134719") == "Счет **4719"
+    assert utils.hide_number("Visa Classic 6831982476737658") == "Visa Classic 6831 98** **** 7658"
+    assert utils.hide_number("Maestro 3928549031574026") == "Maestro 3928 54** **** 4026"
+    assert utils.hide_number("MasterCard 3152479541115065") == "MasterCard 3152 47** **** 5065"

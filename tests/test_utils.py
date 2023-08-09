@@ -7,10 +7,13 @@ from constants import PATH
 
 test_list = [{"state": "EXECUTED"},
              {"state": "EXECUTED"},
+             {"bug": "EXECUTED"},
              {"state": "EXECUTED"},
+             {"frog": "EXECUTED"},
              {"state": "EXECUTED"},
+             {"state": "executed"},
              {"state": "EXECUTED"},
-             {"state": "EXECUTE"},
+             {"state": "EXECUTED"}
              ]
 
 
@@ -30,7 +33,12 @@ def test_format_date():
 
 
 def test_last_transactions():
-    assert len(utils.last_transactions(test_list)) == 5
+    assert utils.last_transactions(test_list) == [{"state": "EXECUTED"},
+                                                  {"state": "EXECUTED"},
+                                                  {"state": "EXECUTED"},
+                                                  {"state": "EXECUTED"},
+                                                  {"state": "EXECUTED"}
+                                                  ]
 
 
 def test_hide_number():

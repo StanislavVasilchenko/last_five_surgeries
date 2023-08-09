@@ -5,6 +5,14 @@ import pytest
 from utils import utils
 from constants import PATH
 
+test_list = [{"state": "EXECUTED"},
+             {"state": "EXECUTED"},
+             {"state": "EXECUTED"},
+             {"state": "EXECUTED"},
+             {"state": "EXECUTED"},
+             {"state": "EXECUTE"},
+             ]
+
 
 @pytest.fixture
 def read():
@@ -21,8 +29,8 @@ def test_format_date():
     assert utils.format_date("2018-12-20T16:43:26.929246") == "20.12.2018"
 
 
-def test_last_transactions(read):
-    assert len(utils.last_transactions(read)) == 5
+def test_last_transactions():
+    assert len(utils.last_transactions(test_list)) == 5
 
 
 def test_hide_number():

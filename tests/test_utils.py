@@ -4,6 +4,7 @@ import pytest
 
 from utils import utils
 from constants import PATH
+from utils.utils import sort_transactions_by_date
 
 test_list = [{"state": "EXECUTED"},
              {"state": "EXECUTED"},
@@ -15,6 +16,12 @@ test_list = [{"state": "EXECUTED"},
              {"state": "EXECUTED"},
              {"state": "EXECUTED"}
              ]
+
+test_list_by_sort = [{"date": "2020-08-26T10:50:58.294041"},
+                     {"no_date": "2019-07-03T18:35:29.512364"},
+                     {"no_date": "2018-06-30T02:08:58.425572"},
+                     {"date": "2016-12-20T16:43:26.929246"},
+                     {"date": "2017-03-23T10:45:06.972075"}]
 
 
 @pytest.fixture
@@ -46,3 +53,9 @@ def test_hide_number():
     assert utils.hide_number("Visa Classic 6831982476737658") == "Visa Classic 6831 98** **** 7658"
     assert utils.hide_number("Maestro 3928549031574026") == "Maestro 3928 54** **** 4026"
     assert utils.hide_number("MasterCard 3152479541115065") == "MasterCard 3152 47** **** 5065"
+
+
+def test_sort_transactions_by_date():
+    assert sort_transactions_by_date(test_list_by_sort) == [{"date": "2020-08-26T10:50:58.294041"},
+                                                            {"date": "2017-03-23T10:45:06.972075"},
+                                                            {"date": "2016-12-20T16:43:26.929246"}]

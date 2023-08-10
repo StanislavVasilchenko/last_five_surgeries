@@ -1,5 +1,4 @@
 import json
-
 from constants import PATH
 
 
@@ -8,6 +7,18 @@ def read_file(path=PATH) -> list:
     with open(path, "r") as file:
         result = json.load(file)
     return result
+
+
+def sort_transactions_by_date(transactions: list, key="date"):
+    """Принимает на вход исходный список словарей с транзакциями,
+    проверяет наличие ключа "date", если ключ существует, то добавляет
+     словарь в новый список. Сортирует новый список по дате, по убыванию"""
+    sorted_list = []
+    for transaction in transactions:
+        if transaction.get(key):
+            sorted_list.append(transaction)
+    sorted_list.sort(key=lambda x: x[key], reverse=True)
+    return sorted_list
 
 
 def last_transactions(data: list, key="state", value="EXECUTED") -> list:
@@ -40,6 +51,6 @@ def hide_number(number: str):
             hide_number_check = digits[len(digits) - 4:len(digits)]
             return f'{" ".join(broken_number[0:len(broken_number) - 1])} **{hide_number_check}'
         elif digits.isdigit() and len(digits) == 16:
-            number_card = [digits[x:x+4] for x in range(0, len(digits), 4)]
-            hide_number_card = " ".join([number_card[0], number_card[1][0:2] + "**", "*"*4, number_card[3]])
+            number_card = [digits[x:x + 4] for x in range(0, len(digits), 4)]
+            hide_number_card = " ".join([number_card[0], number_card[1][0:2] + "**", "*" * 4, number_card[3]])
             return f"{' '.join(broken_number[0:len(broken_number) - 1])} {hide_number_card}"

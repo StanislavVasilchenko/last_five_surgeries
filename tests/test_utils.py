@@ -2,20 +2,20 @@ import json
 
 import pytest
 
-from utils import utils
-from constants import PATH
-from utils.utils import sort_transactions_by_date
+from files import utils
 
-test_list = [{"state": "EXECUTED"},
-             {"state": "EXECUTED"},
-             {"bug": "EXECUTED"},
-             {"state": "EXECUTED"},
-             {"frog": "EXECUTED"},
-             {"state": "EXECUTED"},
-             {"state": "executed"},
-             {"state": "EXECUTED"},
-             {"state": "EXECUTED"}
-             ]
+PATH_TO_TEST_FILE = "/home/stanislav/skypro_project/last_five_surgeries /tests/operations.json"
+
+test_list_by_key = [{"state": "EXECUTED"},
+                    {"state": "EXECUTED"},
+                    {"bug": "EXECUTED"},
+                    {"state": "EXECUTED"},
+                    {"frog": "EXECUTED"},
+                    {"state": "EXECUTED"},
+                    {"state": "executed"},
+                    {"state": "EXECUTED"},
+                    {"state": "EXECUTED"}
+                    ]
 
 test_list_by_sort = [{"date": "2020-08-26T10:50:58.294041"},
                      {"no_date": "2019-07-03T18:35:29.512364"},
@@ -26,13 +26,13 @@ test_list_by_sort = [{"date": "2020-08-26T10:50:58.294041"},
 
 @pytest.fixture
 def read():
-    with open(PATH) as file:
+    with open(PATH_TO_TEST_FILE) as file:
         result_test = json.load(file)
     return result_test
 
 
 def test_read_file(read):
-    assert utils.read_file() == read
+    assert utils.read_file(PATH_TO_TEST_FILE) == read
 
 
 def test_format_date():
@@ -40,12 +40,12 @@ def test_format_date():
 
 
 def test_last_transactions():
-    assert utils.last_transactions(test_list) == [{"state": "EXECUTED"},
-                                                  {"state": "EXECUTED"},
-                                                  {"state": "EXECUTED"},
-                                                  {"state": "EXECUTED"},
-                                                  {"state": "EXECUTED"}
-                                                  ]
+    assert utils.last_transactions(test_list_by_key) == [{"state": "EXECUTED"},
+                                                         {"state": "EXECUTED"},
+                                                         {"state": "EXECUTED"},
+                                                         {"state": "EXECUTED"},
+                                                         {"state": "EXECUTED"}
+                                                         ]
 
 
 def test_hide_number():
@@ -56,6 +56,6 @@ def test_hide_number():
 
 
 def test_sort_transactions_by_date():
-    assert sort_transactions_by_date(test_list_by_sort) == [{"date": "2020-08-26T10:50:58.294041"},
-                                                            {"date": "2017-03-23T10:45:06.972075"},
-                                                            {"date": "2016-12-20T16:43:26.929246"}]
+    assert utils.sort_transactions_by_date(test_list_by_sort) == [{"date": "2020-08-26T10:50:58.294041"},
+                                                                  {"date": "2017-03-23T10:45:06.972075"},
+                                                                  {"date": "2016-12-20T16:43:26.929246"}]

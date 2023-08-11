@@ -1,4 +1,4 @@
-from utils.utils import read_file, last_transactions, format_date, hide_number, sort_transactions_by_date
+from files.utils import read_file, last_transactions, format_date, hide_number, sort_transactions_by_date
 
 
 def main():

@@ -21,13 +21,13 @@ def sort_transactions_by_date(transactions: list, key="date"):
     return sorted_list
 
 
-def last_transactions(data: list, key="state", value="EXECUTED") -> list:
+def last_transactions(data: list, key="state", value="EXECUTED", quantity=5) -> list:
     """Принимает на вход список словарей и собирает новый список отфильтрованный
     по определенному ключу (по умолчанию "state") и значению этого ключа (по умодчанию "EXECUTED")
     Возвращает список из пяти словарей с искомым ключ=значение"""
     five_executed_transactions = []
     for transaction in data:
-        if transaction.get(key) == value and len(five_executed_transactions) < 5:
+        if transaction.get(key) == value and len(five_executed_transactions) < quantity:
             five_executed_transactions.append(transaction)
     return five_executed_transactions
 
@@ -39,13 +39,13 @@ def format_date(date: str) -> str:
     return ".".join(date_operation[::-1])
 
 
-def hide_number(number: str):
+def hide_number(card_number: str):
     """Принимает на вход строку с платежными данными (Счет 44812258784861134719) и возвращает
     строку со скрытым номером счета или карты:
     Счет **4719
     Visa Classic 6831 98** **** 7658
     """
-    broken_number = number.split(" ")
+    broken_number = card_number.split(" ")
     for digits in broken_number:
         if digits.isdigit() and len(digits) > 16:
             hide_number_check = digits[len(digits) - 4:len(digits)]

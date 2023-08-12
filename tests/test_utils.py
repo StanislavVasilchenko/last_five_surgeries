@@ -2,7 +2,7 @@ import json
 
 import pytest
 
-from files import utils
+from utils import utils
 
 PATH_TO_TEST_FILE = "/home/stanislav/skypro_project/last_five_surgeries /tests/operations.json"
 
